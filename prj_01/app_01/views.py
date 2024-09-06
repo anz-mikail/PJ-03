@@ -1,22 +1,32 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+
+from .filters import ResponseFilter
 from .models import Post, Response
 from .forms import PostForm, ResponseForm
 
 
 class PostList(ListView):
     model = Post
-   # ordering = '-dateCreation'
+   # ordering = 'dateCreation'
     template_name = 'post.html'
     context_object_name = 'post'
     paginate_by = 10
+
+
+class IdPostList(DetailView):
+    model = Post
+    template_name = 'post_id.html'
+    context_object_name = 'post_id'
 
 
 class PostUpdate(LoginRequiredMixin, UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
+    success_url = '/post/'
 
 
 class PostCreate(LoginRequiredMixin, CreateView):
@@ -41,8 +51,13 @@ class ResponseList(LoginRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['UserResponse'] = Response.objects.filter(author=self.request.user)
+        context['filterset'] = self.filterset
         return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.filterset = ResponseFilter(self.request.GET, queryset)
+        return queryset.filter(post__author=self.request.user)
 
 
 class ResponseCreate(LoginRequiredMixin, CreateView):
@@ -62,3 +77,15 @@ class ResponseDelete(DeleteView):
     model = Response
     template_name = 'response_delete.html'
     success_url = '/response/'
+
+
+class PostDelete(DeleteView):
+    model = Post
+    template_name = 'post_delete.html'
+    success_url = '/post/'
+
+def response_status_update(request, pk):
+    resp = Response.objects.get(pk=pk)
+    resp.status = True
+    resp.save()
+    return redirect(reverse_lazy('response'))

@@ -5,7 +5,7 @@ from .models import Response
 
 
 @receiver(pre_save, sender=Response)
-def handler(sender, instance, created, **kwaegs):
+def handler(sender, instance, created, **kwargs):
     if instance.status:
         mail = instance.author.email
         send_mail(

@@ -1,11 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 from ckeditor.fields import RichTextField
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 
 
 class Post(models.Model):
+
     TYPE = (
         ('tank', 'Танки'),
         ('heal', 'Хилы'),
@@ -18,10 +20,13 @@ class Post(models.Model):
         ('potion', 'Зельевары'),
         ('spellmaster', 'Мастер заклинаний'),
     )
+
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=20)
     text = RichTextField()
     category = models.CharField(max_length=20, choices=TYPE, default='tank')
+
+   # def get_absolute_url(self): return reverse('new', args=[str(self.pk)])
 
 
 class Response(models.Model):
