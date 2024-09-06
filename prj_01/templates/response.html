@@ -8,25 +8,27 @@ response
 
 <h1>Отклики</h1>
 
-   <hr>
-   {% if response%}
-    <table style="margin-left: 1px; margin-rith: ;">
-           <tr>
-               <td style="width: 200px"><u>Автор:</u></td>
-               <td style="width: 200px"><u>Содержание:</u></td>
-               <td style="width: 200px"><u>Объявление:</u></td>
-           </tr>
-           {% for re in response %}
-           <tr>
-               <td style="width: 250px">{{re.author}}</td>
-               <td style="width: 250px">{{re.text}}</td>
-               <td style="width: 250px">{{re.post}}</td>
-           </tr>
-           {% endfor %}
+<hr>
 
+
+{% if response%}
+    <table style="margin-left: 1px; margin-rith: ;">
+        <tr>
+            <td style="width: 200px"><u>Автор:</u></td>
+            <td style="width: 200px"><u>Содержание:</u></td>
+        </tr>
+        {% for re in UserResponse %}
+        <tr>
+            <td style="width: 250px">{{re.author}}</td>
+            <td style="width: 250px">{{re.text}}</td>
+            <td style="width: 200px"><a href={% url 'response_delete' re.id%}> Удалить </a></td>
+            <td style="width: 250px"><button type="submit">Принять</button> </td>
+        </tr>
+        {% endfor %}
     </table>
-   {% else %}
-       <h2>Откликов нет!</h2>
-   {% endif %}
+
+{% else %}
+    <h2>Откликов нет!</h2>
+{% endif %}
 
 {% endblock content %}

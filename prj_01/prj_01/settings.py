@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.flatpages',
 
+    'django_filters',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -153,8 +155,8 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
 
-LOGIN_REDIRECT_URL = 'post/'
-LOGOUT_REDIRECT_URL = 'post/'
+LOGIN_REDIRECT_URL = '/post/'
+LOGOUT_REDIRECT_URL = '/post/'
 
 
 AUTHENTICATION_BACKENDS = [

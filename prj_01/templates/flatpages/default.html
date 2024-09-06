@@ -33,14 +33,20 @@
                             <a class="nav-link" href="/post/create/">Опубликовать</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/post/response/create/">Добавить отклик</a>
+                            <a class="nav-link" href="/response/create/">Добавить отклик</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/post/response/">Мои отклики</a>
+                            <a class="nav-link" href="/response/">Мои отклики</a>
                         </li>
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">{{ user }}</a>
+                        </li>
+                        {% else %}
                         <li class="nav-item">
                             <a class="nav-link" href="/accounts/login/">Вход</a>
                         </li>
+                        {% endif %}
                         <li class="nav-item">
                             <a class="nav-link" href="/accounts/logout/">Выход</a>
                         </li>
