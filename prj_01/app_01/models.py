@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
-from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from django.urls import reverse_lazy, reverse
 
 
@@ -23,7 +23,7 @@ class Post(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=20)
-    text = RichTextField()
+    text = RichTextUploadingField()
     category = models.CharField(max_length=20, choices=TYPE, default='tank')
 
    # def get_absolute_url(self): return reverse('new', args=[str(self.pk)])

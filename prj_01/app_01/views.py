@@ -13,7 +13,7 @@ class PostList(ListView):
    # ordering = 'dateCreation'
     template_name = 'post.html'
     context_object_name = 'post'
-    paginate_by = 10
+
 
 
 class IdPostList(DetailView):
@@ -55,9 +55,9 @@ class ResponseList(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-        self.filterset = ResponseFilter(self.request.GET, queryset)
-        return queryset.filter(post__author=self.request.user)
+        queryset = super().get_queryset().filter(post__author=self.request.user)
+        self.filterset = ResponseFilter(self.request.GET, queryset, request=self.request.user.id)
+        return self.filterset.qs
 
 
 class ResponseCreate(LoginRequiredMixin, CreateView):
@@ -89,3 +89,4 @@ def response_status_update(request, pk):
     resp.status = True
     resp.save()
     return redirect(reverse_lazy('response'))
+
