@@ -137,27 +137,30 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR / "static")
-STATICFILES_DIRS = [os.path.join(BASE_DIR / "app_01/static")]
-
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
+
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-# CKEDITOR_CONFIGS = {
-#     'default': {
-#         'toolbar': 'full',
-#         'height': 300,
-#         'width': 900,
-#     },
-# }
+STATIC_URL = '/static/'
+STATICFILES_DIRS = BASE_DIR, "static"
+STATIC_ROOT = os.path.join(BASE_DIR, "app_01/static")
 
+MEDIA_URL = '/images/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
+
+
+CKEDITOR_BASEPATH = '/static/ckeditor/ckeditor/'
 CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'full',
+        'removePlugins': 'exportpdf',
+        'extraPlugins': ','.join(['html5video'])
+    },
+}
 
 
 LOGIN_REDIRECT_URL = '/post/'
@@ -169,13 +172,15 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
+#ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'

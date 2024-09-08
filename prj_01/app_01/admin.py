@@ -18,4 +18,3 @@ from ckeditor_uploader.widgets import CKEditorUploadingWidget
 
 admin.site.register(Post)
 admin.site.register(Response)
-# admin.site.register(PostAdminForm)

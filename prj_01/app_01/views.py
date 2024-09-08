@@ -10,9 +10,19 @@ from .forms import PostForm, ResponseForm
 
 class PostList(ListView):
     model = Post
-   # ordering = 'dateCreation'
+    ordering = 'author'
     template_name = 'post.html'
     context_object_name = 'post'
+
+
+class PersonalPost(ListView):
+    model = Post
+    template_name = 'post_personal.html'
+    context_object_name = 'personal_post'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        return queryset.filter(author=self.request.user)
 
 
 
@@ -82,7 +92,7 @@ class ResponseDelete(DeleteView):
 class PostDelete(DeleteView):
     model = Post
     template_name = 'post_delete.html'
-    success_url = '/post/'
+    success_url = '/post/personal/'
 
 def response_status_update(request, pk):
     resp = Response.objects.get(pk=pk)

@@ -23,10 +23,10 @@ class Post(models.Model):
 
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=20)
-    text = RichTextUploadingField()
+    text = RichTextUploadingField(null=True, config_name='default',)
     category = models.CharField(max_length=20, choices=TYPE, default='tank')
 
-   # def get_absolute_url(self): return reverse('new', args=[str(self.pk)])
+    def get_absolute_url(self): return reverse('post_id', args=[str(self.pk)])
 
 
 class Response(models.Model):
